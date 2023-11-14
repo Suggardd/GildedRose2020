@@ -34,7 +34,7 @@ public class GildedRoseTest {
 	}
 	
 	@Test 
-	public void gildedRose_TestInit() {
+	public void gildedRoseTest_TestInit() {
 		GildedRose i = new GildedRose();
 		
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -48,5 +48,106 @@ public class GildedRoseTest {
 		assertEquals(6, items.size());
 		
 		System.setOut(System.out);
-	}	
+	}
+	
+	@Test
+	public void gildedRoseTest_TestDegredation() {
+		GildedRose i = new GildedRose();
+		Item regItem = new Item("Reg item", 5, 10);
+		i.setItem(regItem);
+		i.oneDay();
+		
+		assertEquals(9, regItem.getQuality());
+		assertEquals(4, regItem.getSellIn());
+	}
+	
+	@Test
+	public void gildedRoseTest_TestDoubleDegredation() {
+		
+		GildedRose i = new GildedRose();
+		Item regItem = new Item("Reg item", 1, 10);
+		i.setItem(regItem);
+		i.oneDay();
+		i.oneDay();
+		
+		assertEquals(7, regItem.getQuality());
+	}
+	
+	@Test
+	public void gildedRoseTest_TestNegativeQuality() {
+		GildedRose i = new GildedRose();
+		Item regItem = new Item("Reg item", 1, 0);
+		i.setItem(regItem);
+		i.oneDay();
+		i.oneDay();
+		
+		assertEquals(0, regItem.getQuality());
+	}
+	
+	@Test 
+	public void gildedRoseTest_TestAgedBrie() {
+		GildedRose i = new GildedRose();
+		Item agedBrie = new Item("Aged Brie", 2, 0);
+		i.setItem(agedBrie);
+		i.oneDay();
+		
+		assertEquals(1, agedBrie.getQuality());
+	}
+	
+	@Test
+	public void gildedRoseTest_TestMaxQuality() {
+		GildedRose i = new GildedRose();
+		Item agedBrie = new Item("Aged Brie", 2, 50);
+		i.setItem(agedBrie);
+		i.oneDay();
+		i.oneDay();
+		
+		assertEquals(50, agedBrie.getQuality());
+	}
+	
+	@Test 
+	public void gildedRoseTest_Sulfuras() {
+		GildedRose i = new GildedRose();
+		Item sulfuras = new Item("Sulfuras, Hand of Ragnaros", 1, 80);
+		i.setItem(sulfuras);
+		i.oneDay();
+		
+		assertEquals(80, sulfuras.getQuality());
+		assertEquals(1, sulfuras.getSellIn());
+	}
+	
+	public void passDays(GildedRose inn, int days) {
+		for(int i = 0; i < days; i++) {
+			inn.oneDay();
+		}
+	}
+	
+	@Test
+	public void gildedRoseTest_Backstage() {
+		GildedRose i = new GildedRose();
+		Item backstage = new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20);
+		i.setItem(backstage);
+		
+		//normal increase of 1/day
+		passDays(i, 5);
+		
+		assertEquals(25, backstage.getQuality());
+		
+		//increase of 2/day
+		passDays(i, 5);
+		
+		assertEquals(35, backstage.getQuality());
+		
+		//increase of 3/day
+		passDays(i, 5);
+		
+		assertEquals(50, backstage.getQuality());
+		
+		//loses value
+		i.oneDay();
+		
+		assertEquals(0, backstage.getQuality());
+	}
+	
+	
 }
