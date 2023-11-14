@@ -2,6 +2,8 @@ package fi.oulu.tol.sqat.tests;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 import org.junit.Test;
@@ -15,6 +17,7 @@ public class GildedRoseTest {
 	public void testTheTruth() {
 		assertTrue(true);
 	}
+	
 	@Test
 	public void exampleTest() {
 		//create an inn, add an item, and simulate one day
@@ -29,4 +32,21 @@ public class GildedRoseTest {
 		//assert quality has decreased by one
 		assertEquals("Failed quality for Dexterity Vest", 19, quality);
 	}
+	
+	@Test 
+	public void gildedRose_TestInit() {
+		GildedRose i = new GildedRose();
+		
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+		
+		GildedRose.init();
+		String comp = outContent.toString();
+		assertEquals("OMGHAI!\r\n", comp);
+		
+		List<Item> items = i.getItems();
+		assertEquals(6, items.size());
+		
+		System.setOut(System.out);
+	}	
 }
