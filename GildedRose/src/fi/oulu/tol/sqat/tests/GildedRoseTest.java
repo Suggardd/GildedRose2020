@@ -149,5 +149,133 @@ public class GildedRoseTest {
 		assertEquals(0, backstage.getQuality());
 	}
 	
+	@Test
+	public void gildedRoseTest_loopPassThrg2() {
+		GildedRose i = new GildedRose();
+		Item regItem1 = new Item("Regular item 1", 5, 30);
+		Item regItem2 = new Item("Regular item 2", 5, 30);
+		
+		i.setItem(regItem1);
+		i.setItem(regItem2);
+		
+		passDays(i, 2);
+		
+		
+		assertEquals(28, regItem1.getQuality());
+		assertEquals(28, regItem2.getQuality());
+		
+		assertEquals(3, regItem1.getSellIn());
+		assertEquals(3, regItem2.getSellIn());
+	}
+	
+	@Test
+	public void gildedRoseTest_loopPassThrgM() {
+		GildedRose i = new GildedRose();
+		Item regItem1 = new Item("Regular item 1", 5, 30);
+		Item regItem2 = new Item("Regular item 2", 5, 30);
+		Item regItem3 = new Item("Regular item 3", 5, 30);
+		
+		i.setItem(regItem1);
+		i.setItem(regItem2);
+		i.setItem(regItem3);
+		
+		passDays(i, 3);
+		
+		
+		assertEquals(27, regItem1.getQuality());
+		assertEquals(27, regItem2.getQuality());
+		assertEquals(27, regItem3.getQuality());
+		
+		assertEquals(2, regItem1.getSellIn());
+		assertEquals(2, regItem2.getSellIn());
+		assertEquals(2, regItem3.getSellIn());
+	}
+	
+	@Test
+	public void gildedRoseTest_loopPassThrgNplus1() {
+		GildedRose i = new GildedRose();
+		Item regItem1 = new Item("Regular item 1", 10, 30);
+		Item regItem2 = new Item("Regular item 2", 10, 30);
+		Item regItem3 = new Item("Regular item 3", 10, 30);
+		
+		i.setItem(regItem1);
+		i.setItem(regItem2);
+		i.setItem(regItem3);
+		
+		passDays(i, 5);
+		
+		assertEquals(25, regItem1.getQuality());
+		assertEquals(25, regItem2.getQuality());
+		assertEquals(25, regItem3.getQuality());
+		
+		assertEquals(5, regItem1.getSellIn());
+		assertEquals(5, regItem2.getSellIn());
+		assertEquals(5, regItem3.getSellIn());
+		
+		i.oneDay();
+		
+		assertEquals(24, regItem1.getQuality());
+		assertEquals(24, regItem2.getQuality());
+		assertEquals(24, regItem3.getQuality());
+		
+		assertEquals(4, regItem1.getSellIn());
+		assertEquals(4, regItem2.getSellIn());
+		assertEquals(4, regItem3.getSellIn());
+		
+		i.oneDay();
+		
+		assertEquals(23, regItem1.getQuality());
+		assertEquals(23, regItem2.getQuality());
+		assertEquals(23, regItem3.getQuality());
+		
+		assertEquals(3, regItem1.getSellIn());
+		assertEquals(3, regItem2.getSellIn());
+		assertEquals(3, regItem3.getSellIn());
+	}
+	
+	@Test
+	public void gildedRoseTest_killingSurvivors1() {
+		GildedRose i = new GildedRose();
+		GildedRose.init();
+		
+		List<Item> items = i.getItems();
+		assertEquals(19, items.get(0).getQuality());
+	}
+	
+	@Test
+	public void gildedRoseTest_killingSurvivors2() {
+		GildedRose i = new GildedRose();
+		Item regItem1 = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49);
+		i.setItem(regItem1);
+		
+		i.oneDay();
+		
+		assertEquals(50, regItem1.getQuality());
+
+	}
+	
+	@Test
+	public void gildedRoseTest_gettingCoverage1() {
+		GildedRose i = new GildedRose();
+		Item regItem1 = new Item("Aged Brie", -1, 10);
+		i.setItem(regItem1);
+		
+		i.oneDay();
+		
+		assertEquals(12, regItem1.getQuality());
+	}
+	
+	@Test
+	public void gildedRoseTest_gettingCoverage2() {
+		GildedRose i = new GildedRose();
+		Item regItem1 = new Item("Aged Brie", -1, 49);
+		i.setItem(regItem1);
+		
+		i.oneDay();
+		
+		assertEquals(50, regItem1.getQuality());
+	}
+	
+	
 	
 }
